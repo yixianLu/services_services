@@ -12,6 +12,7 @@ change REGION & AWSID to ur own
 `docker image build -t imgNAME .`
 <br>
 change imgNAME to ur own
+<br>
 3 change tag name
 <br>
 `docker tag imgNAME AWSID.dkr.ecr.REGION.amazonaws.com/REPOSITORIESNAME:imgNAME`
