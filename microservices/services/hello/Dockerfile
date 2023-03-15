@@ -18,9 +18,9 @@ ENV PYTHONPATH=/usr/lib/python3.8/site-packages
 # copy every content from the local file to the image
 COPY . /app
 
-EXPOSE 8000
+EXPOSE 5000
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
 
-CMD ["pi1.py" ]
+CMD ["hello.py" ]
