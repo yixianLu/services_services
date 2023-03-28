@@ -1,0 +1,43 @@
+{
+  "name": "customers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/app.js",
+    "start": "babel src --out-dir dist && nodemon ./dist/app.js",
+    "watch": "nodemon --exec babel-node src/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-es": "^1.5.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "elasticsearch": "^16.5.0",
+    "express": "^4.17.1",
+    "file-type": "^12.0.1",
+    "http-aws-es": "^6.0.0",
+    "morgan": "^1.9.1",
+    "multiparty": "^4.2.1",
+    "nodemailer": "^6.2.1",
+    "nodemon": "^1.19.1",
+    "rotating-file-stream": "^1.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "apidoc": "^0.17.7",
+    "aws-sdk": "^2.560.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "^23.4.2",
+    "jsdoc": "^3.6.2",
+    "prettier": "^1.18.2"
+  }
+}
