@@ -11,7 +11,9 @@
     name: str
 }
 ```
+
 <br>
+
 #### ORDERS
 ```
 {
@@ -20,7 +22,9 @@
     orderTotal: num
 }
 ```
+
 <br>
+
 #### ORDERSTATUS
 ```
 {
