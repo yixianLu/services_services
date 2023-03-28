@@ -5,8 +5,8 @@ module.exports = {
         endpoint: 'http://localhost:3333'
     },
     aws_remote_config: {
-        accessKeyId: 'YOUR',
-        secretAccessKey: 'YOUR',
+        accessKeyId: 'TODO',
+        secretAccessKey: 'TODO',
         region: 'us-east-1'
     }
 };
