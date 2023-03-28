@@ -2,7 +2,7 @@
 # 756
 
 
-### Table
+### Tables
 #### CUSTOMERS
 ```
 {
