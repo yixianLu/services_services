@@ -2,70 +2,66 @@ const AWS = require('aws-sdk');
 const config = require('./../../config.js');
 const uuidv1 = require('uuid/v1');
 
-//const getCustomers = function (req, res) {
-//    AWS.config.update(config.aws_remote_config);
-//
-//    const docClient = new AWS.DynamoDB.DocumentClient();
-//
-//    const params_orders = {
-//        TableName: config.aws_table_name
-//    };
-//	
-//	const params_orderStatus = {
-//		TableName: config.aws_orderStatus_table
-//	};
-//
-//    docClient.scan(params, function (err, data) {
-//
-//        if (err) {
-//            console.log(err)
-//            res.send({
-//                success: false,
-//                message: err
-//            });
-//        } else {
-//            const { Items } = data;
-//            res.send({
-//                success: true,
-//                customers: Items
-//            });
-//        }
-//    });
-//}
 
-const addOrder = function (req, res) {
+
+const addOrder = async function (req, res) {
     AWS.config.update(config.aws_remote_config);
     const docClient = new AWS.DynamoDB.DocumentClient();
     const Item = { ...req.body };
-	Item.orderId = uuidv1();
-    var params = {
-        TableName: config.aws_orders_table,
-        Item: Item
+	const orderId = uuidv1();
+	Item.customerId = Item.customerId.toString();
+	Item.orderId = orderId;
+	
+    var params_customer = {
+        TableName: config.aws_customers_table,
+		Key: { "customerId" : Item.customerId}
     };
-
+	
+	
+	const result = await docClient.get(params_customer).promise();
+	const creditLimit = result.Item.creditLimit;
+	const orderTotal = Item.orderTotal;
+	var status = ''
+	if (orderTotal > creditLimit) {
+		status = 'invalid order since over credit limit'
+	} else {
+		status = 'success'
+	}
+	Item.orderStatus = status;
+	var params_order = {
+		TableName: config.aws_orders_table,
+		Item: Item
+	};
+	
     // Call DynamoDB to add the item to the table
-    docClient.put(params, function (err, data) {
-        if (err) {
-            res.send({
-                success: false,
-                message: err
-            });
-        } else {
-            res.send({
-                success: true,
-                message: 'Added order',
-                customerID: params.Item.orderId
-            });
-        }
-    });
+	docClient.put(params_order, function(err, data) {
+		if (err) {
+			res.send({
+				success: false,
+				message: err
+			});
+		} else {
+			var message = 'Failed order';
+			if (params_order.Item.orderStatus == 'success') {
+				message = 'Added order';
+			}
+			res.send({
+				success: true,
+				message: message,
+				orderId: params_order.Item.orderId,
+				orderStatus: params_order.Item.orderStatus
+			});
+		}
+	})
 }
 
 const getOrderStatus = function (req, res) {
     AWS.config.update(config.aws_remote_config);
     const docClient = new AWS.DynamoDB.DocumentClient();
     const orderId = req.params.orderId;
+	console.log(orderId);
     var params = {
-        TableName: config.aws_orderStatus_table
+        TableName: config.aws_orders_table
     };
 	params.Key = { "orderId": orderId}
 
