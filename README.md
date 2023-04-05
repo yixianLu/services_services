@@ -66,6 +66,10 @@ User can create ORDER by sending request (POST) with: `localhost:3000/api/orders
     orderTotal: num
 }
 ```
-
-
 User can get ORDER by sending request (GET) with: `localhost:3000/api/orders/:orderId`
+
+### 3 graph of microservices
+
+
+
+![image deleted](https://github.com/yixianLu/services_services/blob/main/other_documents/graph_page.jpg?raw=true)
